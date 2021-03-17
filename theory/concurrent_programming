@@ -1,0 +1,17 @@
+1. Proccesses -> Kernel. spawn/send/receive/exit/sleep
+
+
+This doesn’t happen in Elixir, as it implements tail-call optimization.
+If the last thing a function does is call itself, there’s no need to make the call.
+Instead, the runtime simply jumps back to the start of the function.
+If the recursive call has arguments, then these replace the original parameters.
+But beware—the recursive call must be the very last thing executed.
+For example, the following code is not tail recursive:
+
+def factorial(0), do: 1
+def factorial(n), do: n * factorial(n-1)
+
+2. spawn_link -> parent process dies
+if parent has Process.flag(:trap_exit, true) -> it receives {:EXIT, pid} message
+
+spawn_monitor -> parent process receives {:DOWN, pid}
